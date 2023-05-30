@@ -1,0 +1,78 @@
+@import "../../styles/colors"
+@import "../../styles/fonts"
+
+.overlay
+  position: fixed
+  left: 0
+  top: 0
+  right: 0
+  bottom: 0
+  background-color: rgba(black, 0.6)
+
+  display: flex
+  justify-content: center
+  align-items: center
+
+  z-index: 1000
+
+.wrapperAuth
+  width: 480px
+  background-color: white
+  border-radius: 24px
+  border: none
+
+
+.auth
+  background-color: white
+  margin: 48px
+  display: flex
+  flex-direction: column
+  gap: 48px
+
+
+.authHeader
+  display: flex
+  justify-content: space-between
+
+  svg
+    color: rgba($c-blue, 0.72)
+
+.authHeader > span
+  font-weight: 600
+  font-size: 28px
+  line-height: 32px
+  color: rgba($c-blue, 0.88)
+
+.authMain
+  display: flex
+  flex-direction: column
+  gap: 32px
+
+.fields
+  display: flex
+  flex-direction: column
+  gap: 24px
+
+.login
+  display: flex
+  flex-direction: column
+  gap: 16px
+
+
+.smsLogin
+  display: flex
+  justify-content: space-between
+
+
+.errorMessage
+  color: red
+
+.error
+  color: red
+  font-size: 14px
+
+
+
+
+
+

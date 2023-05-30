@@ -1,0 +1,58 @@
+@import "src/styles/fonts"
+@import "src/styles/colors"
+
+.balance
+  width: 260px
+  height: 371px
+  display: flex
+  flex-direction: column
+  box-shadow: 0 12px 32px rgba(121, 121, 121, 0.12), 0 4px 24px rgba(21, 45, 103, 0.12)
+  border: 1px solid rgba(62, 80, 114, 0.12)
+  border-radius: 16px
+
+  &__text
+    text-align: center
+    display: flex
+    flex-direction: column
+    padding: 140px 35px 0
+    font-size: 14px
+
+    &__one
+      display: flex
+      flex-direction: row
+      color: black
+      justify-content: center
+      vertical-align: center
+      &__img
+        position: relative
+        top: -5px
+
+      div:not(:last-child)
+        margin-right: 5px
+
+      &__price1
+        font-weight: 400
+
+      &__price2
+        font-weight: 600
+
+    &__two
+      margin-top: 9px
+      color: rgba($c-gray, 0.56)
+      font-weight: 400
+
+  &__button
+    display: flex
+    justify-content: center
+    margin: 95px 0 20px
+
+    &__but
+      border-radius: 8px
+      float: right
+      font-weight: 400
+      color: white
+      background-color: $c-green
+      padding: 10px 20px
+      width: 226px
+
+

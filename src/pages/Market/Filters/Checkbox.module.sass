@@ -1,0 +1,27 @@
+@import "src/styles/fonts"
+@import "src/styles/colors"
+
+.label
+  display: flex
+  flex-direction: row
+  align-items: center
+  margin-bottom: 3px
+  font-weight: 400
+  color: $c-gray-72
+
+  &__checkBox
+    width: 18px
+    height: 18px
+    border: 1.5px solid rgba(0, 11, 38, 0.4)
+    border-radius: 4px
+    margin-right: 10px
+
+    &:checked
+      background-color: $c-green
+      background-image: url("../../../../public/images/mark.svg")
+      background-position: center
+      background-repeat: no-repeat
+      border-color: $c-green
+
+    &:checked ~ span
+      font-weight: 500
