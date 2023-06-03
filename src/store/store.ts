@@ -1,15 +1,13 @@
 import {configureStore} from '@reduxjs/toolkit'
-import {showModalLogin} from './Login'
 import {AuthApi} from '../services/auth'
-import {showRegistration} from './Registration'
 import {showProfile} from './Profile'
+import {showModal} from "./Modal";
 
 
 export const rootStore = configureStore({
     devTools: true,
     reducer: {
-        [showModalLogin.name]: showModalLogin.reducer,
-        [showRegistration.name]: showRegistration.reducer,
+        [showModal.name]: showModal.reducer,
         [showProfile.name]: showProfile.reducer,
         [AuthApi.reducerPath]: AuthApi.reducer,
     },
