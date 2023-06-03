@@ -1,17 +1,16 @@
 import React from 'react'
 import Modal from 'react-modal'
 
-import {ModalProps} from "./modal";
 import styles from "./Auth.module.sass"
 import {Login} from "./Login";
 import {Registration} from "./Registration";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../store/store";
-import {turnOffModal} from "../../store/Modal";
+import {turnOffModal} from "../../store/AuthModal";
 
 
-export const MainModal = () => {
-    const {isOpenModal, currentForm} = useSelector((state: RootState) => state.showModal)
+export const AuthModal = () => {
+    const {isOpenModal, currentForm} = useSelector((state: RootState) => state.showAuthModal)
     const dispatch = useDispatch()
     const closeModal = () => dispatch(turnOffModal())
 

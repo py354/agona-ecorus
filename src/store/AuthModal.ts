@@ -1,17 +1,17 @@
 import {createSlice} from '@reduxjs/toolkit'
 
-export interface Modal {
+export interface AuthModal {
     isOpenModal: boolean
     currentForm: 'login' | 'registration'
 }
 
-const initialState: Modal = {
+const initialState: AuthModal = {
     isOpenModal: false,
     currentForm: 'login'
 }
 
-export const showModal = createSlice({
-    name: 'showModal',
+export const showAuthModal = createSlice({
+    name: 'showAuthModal',
     initialState,
     reducers: {
         turnOnLogin: (state) => {
@@ -28,4 +28,4 @@ export const showModal = createSlice({
     }
 })
 
-export const {turnOnLogin, turnOnRegistration, turnOffModal} = showModal.actions
+export const {turnOnLogin, turnOnRegistration, turnOffModal} = showAuthModal.actions

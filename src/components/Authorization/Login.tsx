@@ -1,13 +1,13 @@
 import React, {useEffect} from 'react'
 import * as yup from 'yup'
-import {useDispatch, useSelector} from 'react-redux'
+import {useDispatch} from 'react-redux'
 import {Form, Formik, FormikHelpers} from 'formik'
 
 import styles from "./Auth.module.sass"
 
 import {ButtonAuth, ButtonPartner, Input, LinkAuth} from '../UI/UI'
 
-import {turnOnRegistration} from '../../store/Modal'
+import {turnOnRegistration} from '../../store/AuthModal'
 import {setBalance, setEmail} from '../../store/Profile'
 
 import {useAuthorizationMutation, useLazyGetProfileQuery} from '../../services/auth'

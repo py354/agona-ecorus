@@ -1,7 +1,6 @@
 import {useRegistrationMutation} from '../../services/auth'
 import {RegisterBody} from '../../models/profile'
-import {RegisterResponse} from '../../models/profile'
-import {turnOnLogin} from '../../store/Modal'
+import {turnOnLogin} from '../../store/AuthModal'
 
 
 import React from 'react'
