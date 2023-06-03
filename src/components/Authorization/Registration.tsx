@@ -1,5 +1,6 @@
 import {useRegistrationMutation} from '../../services/auth'
 import {RegisterBody} from '../../models/profile'
+import {RegisterResponse} from '../../models/profile'
 import {turnOnLogin} from '../../store/Modal'
 
 
@@ -26,10 +27,13 @@ export const Registration = ({closeModal}: FormProps) => {
     }
 
     function onSubmitFormik(values: RegisterBody, helper: FormikHelpers<RegisterBody>) {
-        register(values)
-        helper.resetForm()
-        closeModal()
-        dispatch(turnOnLogin())
+        register(values).then(data => {
+            if (!data.hasOwnProperty('error')) {
+                helper.resetForm()
+                closeModal()
+                dispatch(turnOnLogin())
+            }
+        })
     }
 
     const validationRegister = yup.object({
@@ -41,14 +45,10 @@ export const Registration = ({closeModal}: FormProps) => {
             )
             .required('Поле номера телефона обязательно для заполнения'),
         password: yup.string()
-            .matches(
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-                'Пароль должен содержать не менее 8 символов, включая заглавные и строчные буквы, а также цифры'
-            )
+            .min(5, 'Минимальная длина пароля - 5 символов')
             .required('Поле пароля обязательно для заполнения'),
         balance: yup.number().positive("Баланс должен быть положительным числом").required()
     })
-
 
     return (
         <Formik
@@ -128,6 +128,9 @@ export const Registration = ({closeModal}: FormProps) => {
                                     {errors.balance}
                                 </div>
                             )}
+
+                            {result.isError &&
+                                <span className={styles.errorMessage}>Ошибка регистрации</span>}
 
                             <div className={styles.login}>
                                 <ButtonAuth

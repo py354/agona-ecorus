@@ -18,3 +18,4 @@ export type LocationInfo = {
     city?: string;
     materials?: Array<ShopMaterial>;
 };
+

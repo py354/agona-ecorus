@@ -18,3 +18,4 @@ export type Location = {
      */
     city?: string;
 };
+

@@ -9,3 +9,4 @@ export type PageDataUser = {
     total_pages?: number;
     data?: Array<User>;
 };
+

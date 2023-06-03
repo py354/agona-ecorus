@@ -22,18 +22,18 @@ export const Login = ({closeModal}: FormProps) => {
 
     const dispatch = useDispatch()
 
-    // function setData(balanceFetch: number | undefined, emailFetch: string | undefined) {
-    //     dispatch(setBalance(balanceFetch))
-    //     dispatch(setEmail(emailFetch))
-    // }
+    function setData(balanceFetch: number | undefined, emailFetch: string | undefined) {
+        dispatch(setBalance(balanceFetch))
+        dispatch(setEmail(emailFetch))
+    }
 
-    // useEffect(() => {
-    //     if (localStorage.getItem('token')) {
-    //         getProfile(null)
-    //             .then(prom => prom.data)
-    //             .then(body => setData(body?.balance, body?.email))
-    //     }
-    // }, [getProfile, setData])
+    useEffect(() => {
+        if (localStorage.getItem('token')) {
+            getProfile(null)
+                .then(prom => prom.data)
+                .then(body => setData(body?.balance, body?.email))
+        }
+    }, [])
 
 
     const initialValues: AuthenticationRequest = {
@@ -41,30 +41,27 @@ export const Login = ({closeModal}: FormProps) => {
         password: '',
     }
 
-    function onSubmitFormik(values: AuthenticationRequest, helpers: FormikHelpers<AuthenticationRequest>) {
+    const onSubmitFormik = (values: AuthenticationRequest, helpers: FormikHelpers<AuthenticationRequest>) => {
         if (values.login !== '' && values.password !== '') {
-            // login(values)
-            //     .then(res => {
-            //         if ('data' in res) {
-            //             localStorage.setItem('token', res.data.token as string)
-            //             helpers.resetForm()
-            //             closeModal()
-            //         }
-            //     })
-            //     .then(() => {
-            //         getProfile(null)
-            //             .then(prom => setData(prom?.data?.balance, prom?.data?.email))
-            //     })
+            login(values)
+                .then(res => {
+                    if ('data' in res) {
+                        localStorage.setItem('token', res.data.token as string)
+                        helpers.resetForm()
+                        closeModal()
+                    }
+                })
+                .then(() => {
+                    getProfile(null)
+                        .then(prom => setData(prom?.data?.balance, prom?.data?.email))
+                })
         }
     }
 
     const validationSchema = yup.object().shape({
-        email: yup.string().email('Неверный формат электронной почты').required('Поле обязательно для заполнения'),
+        login: yup.string().required('Поле обязательно для заполнения'),
         password: yup.string()
-            .matches(
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-                'Пароль должен содержать не менее 8 символов, включая заглавные и строчные буквы, а также цифры'
-            )
+            .min(5, 'Минимальная длина пароля - 5 символов')
             .required('Поле пароля обязательно для заполнения'),
     });
 
@@ -84,9 +81,7 @@ export const Login = ({closeModal}: FormProps) => {
                 <Form onSubmit={handleSubmit} className={styles.auth}>
                     <div className={styles.authHeader}>
                         <span>Вход</span>
-                        <button type='submit' onClick={() => {
-                            closeModal()
-                        }}>
+                        <button type='button' onClick={() => closeModal()}>
                             <Icon name="cross"></Icon>
                         </button>
                     </div>

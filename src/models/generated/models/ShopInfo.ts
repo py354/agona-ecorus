@@ -15,3 +15,4 @@ export type ShopInfo = {
     shop_materials?: Array<ShopMaterial>;
     items?: Array<Item>;
 };
+

@@ -11,3 +11,4 @@ export type ShopMaterial = {
     shop?: Shop;
     minimal_quantity?: number;
 };
+

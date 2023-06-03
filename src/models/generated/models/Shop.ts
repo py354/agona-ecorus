@@ -10,3 +10,4 @@ export type Shop = {
     city?: string;
     description?: string;
 };
+

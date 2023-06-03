@@ -6,3 +6,4 @@ export type ShopName = {
     id?: string;
     shop_name?: string;
 };
+

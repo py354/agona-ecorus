@@ -10,3 +10,4 @@ export type PromoCode = {
     qr_url?: string;
     price?: number;
 };
+

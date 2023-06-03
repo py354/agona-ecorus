@@ -11,3 +11,4 @@ export type ShopRequest = {
     description?: string;
     user_ids?: Array<string>;
 };
+

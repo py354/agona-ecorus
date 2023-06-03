@@ -9,3 +9,4 @@ export type PageDataMaterial = {
     total_pages?: number;
     data?: Array<Material>;
 };
+

@@ -6,3 +6,4 @@ export type PromoCodeRequest = {
     price: number;
     item_id: string;
 };
+

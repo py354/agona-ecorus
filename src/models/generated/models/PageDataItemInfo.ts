@@ -9,3 +9,4 @@ export type PageDataItemInfo = {
     total_pages?: number;
     data?: Array<ItemInfo>;
 };
+

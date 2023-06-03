@@ -55,6 +55,7 @@
     ]
   },
   "devDependencies": {
-    "@types/react-modal": "^3.16.0"
+    "@types/react-modal": "^3.16.0",
+    "openapi-typescript-codegen": "^0.24.0"
   }
 }

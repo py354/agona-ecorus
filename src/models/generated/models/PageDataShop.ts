@@ -9,3 +9,4 @@ export type PageDataShop = {
     total_pages?: number;
     data?: Array<Shop>;
 };
+

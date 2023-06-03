@@ -9,3 +9,4 @@ export type PageDataLocation = {
     total_pages?: number;
     data?: Array<Location>;
 };
+

@@ -6,3 +6,4 @@ export type AuthenticationRequest = {
     login: string;
     password: string;
 };
+
