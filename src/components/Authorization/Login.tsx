@@ -126,7 +126,7 @@ export function Login() {
             </div>
             <div className={styles.login}>
               <ButtonAuth type="submit">Войти</ButtonAuth>
-              <div className={styles.smsLogin}>
+              <div className={styles.links}>
                 <LinkAuth onClick={() => {}}>Войти с помощью смс</LinkAuth>
                 <LinkAuth onClick={turnOnRegistration}>Регистрация</LinkAuth>
               </div>
