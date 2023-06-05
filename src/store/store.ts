@@ -1,14 +1,14 @@
 import {configureStore} from '@reduxjs/toolkit'
 import {AuthApi} from '../services/auth'
-import {showProfile} from './Profile'
-import {showAuthModal} from "./AuthModal";
+import {profileSlice} from './Profile'
+import {modalSlice} from "./Modal";
 
 
 export const rootStore = configureStore({
     devTools: true,
     reducer: {
-        [showAuthModal.name]: showAuthModal.reducer,
-        [showProfile.name]: showProfile.reducer,
+        [modalSlice.name]: modalSlice.reducer,
+        [profileSlice.name]: profileSlice.reducer,
         [AuthApi.reducerPath]: AuthApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>

@@ -5,22 +5,23 @@ import Ava from "../../../assets/ava.png"
 
 import {useDispatch, useSelector} from 'react-redux'
 import {RootState} from '../../../store/store'
-import {turnOnLogin} from "../../../store/AuthModal";
-import {AuthModal} from "../../Authorization/Modal";
 import {useNavigate} from "react-router-dom";
+import {Modal} from "../../Modal/Modal";
+import {setModal} from "../../../store/Modal";
+import {Login} from "../../Authorization/Login";
 
 export const UserInfo = () => {
     const dispatch = useDispatch()
 
     const profile = {
-        showBalance: useSelector((state: RootState) => state.showProfile.balance),
-        showEmail: useSelector((state: RootState) => state.showProfile.email)
+        showBalance: useSelector((state: RootState) => state.profile.balance),
+        showEmail: useSelector((state: RootState) => state.profile.email)
     }
 
     const navigate = useNavigate()
     const onClick = (localStorage.getItem('token')) ?
         () => navigate('/account') :
-        () => dispatch(turnOnLogin())
+        () => dispatch(setModal(<Login/>))
 
 
     return (
@@ -42,6 +43,7 @@ export const UserInfo = () => {
                     <button className={styles.text2}>{profile.showEmail}</button>
                 </div>
             </div>
-            <AuthModal/></>
+            <Modal/>
+        </>
     )
 }

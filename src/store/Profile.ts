@@ -10,8 +10,8 @@ const initialState: Profile = {
     email: ''
 }
 
-export const showProfile = createSlice({
-    name: 'showProfile',
+export const profileSlice = createSlice({
+    name: 'profile',
     initialState,
     reducers: {
         setBalance: (state, action: PayloadAction<number | undefined>) => {
@@ -23,4 +23,4 @@ export const showProfile = createSlice({
     }
 })
 
-export const {setBalance, setEmail} = showProfile.actions
+export const {setBalance, setEmail} = profileSlice.actions

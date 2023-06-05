@@ -1,6 +1,6 @@
 import {useRegistrationMutation} from '../../services/auth'
 import {RegisterBody} from '../../models/profile'
-import {turnOnLogin} from '../../store/AuthModal'
+import {destroyModal, setModal} from '../../store/Modal'
 
 
 import React from 'react'
@@ -8,15 +8,18 @@ import * as yup from 'yup'
 import {useDispatch} from 'react-redux'
 import {Form, Formik, FormikHelpers} from 'formik'
 
-import {FormProps} from "./modal";
 import styles from "./Auth.module.sass"
 
 import {ButtonAuth, Input} from '../UI/UI'
 import {Icon} from "../Icon/Icon";
+import {Login} from "./Login";
 
-export const Registration = ({closeModal}: FormProps) => {
+export const Registration = () => {
     const [register, result] = useRegistrationMutation()
     const dispatch = useDispatch()
+
+    const closeModal = () => dispatch(destroyModal())
+    const setupLogin = () => dispatch(setModal(<Login/>))
 
     const initialValues: RegisterBody = {
         email: '',
@@ -30,7 +33,7 @@ export const Registration = ({closeModal}: FormProps) => {
             if (!data.hasOwnProperty('error')) {
                 helper.resetForm()
                 closeModal()
-                dispatch(turnOnLogin())
+                setupLogin()
             }
         })
     }

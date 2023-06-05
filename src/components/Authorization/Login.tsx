@@ -7,20 +7,25 @@ import styles from "./Auth.module.sass"
 
 import {ButtonAuth, ButtonPartner, Input, LinkAuth} from '../UI/UI'
 
-import {turnOnRegistration} from '../../store/AuthModal'
+import {setModal, destroyModal} from '../../store/Modal'
 import {setBalance, setEmail} from '../../store/Profile'
 
 import {useAuthorizationMutation, useLazyGetProfileQuery} from '../../services/auth'
 import {AuthenticationRequest} from '../../models'
 import {Icon} from "../Icon/Icon";
-import {FormProps} from "./modal";
+import {Registration} from "./Registration";
 
 
-export const Login = ({closeModal}: FormProps) => {
+export const Login = () => {
     const [login, data] = useAuthorizationMutation()
     const [getProfile] = useLazyGetProfileQuery()
 
     const dispatch = useDispatch()
+
+    const closeModal = () => dispatch(destroyModal())
+
+    const turnOnRegistration = () => dispatch(setModal(<Registration/>))
+
 
     function setData(balanceFetch: number | undefined, emailFetch: string | undefined) {
         dispatch(setBalance(balanceFetch))
@@ -123,7 +128,7 @@ export const Login = ({closeModal}: FormProps) => {
                             <ButtonAuth type='submit'>Войти</ButtonAuth>
                             <div className={styles.smsLogin}>
                                 <LinkAuth onClick={() => {}}>{'Войти с помощью смс'}</LinkAuth>
-                                <LinkAuth onClick={() => dispatch(turnOnRegistration())}>{'Регистрация'}</LinkAuth>
+                                <LinkAuth onClick={turnOnRegistration}>{'Регистрация'}</LinkAuth>
                             </div>
                         </div>
                         <ButtonPartner type={"button"}>Вход для партнёров</ButtonPartner>
