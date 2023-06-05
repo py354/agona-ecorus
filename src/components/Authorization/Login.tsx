@@ -1,141 +1,140 @@
-import React, {useEffect} from 'react'
-import * as yup from 'yup'
-import {useDispatch} from 'react-redux'
-import {Form, Formik, FormikHelpers} from 'formik'
+import React, { useEffect } from "react";
+import * as yup from "yup";
+import { useDispatch } from "react-redux";
+import { Form, Formik, FormikHelpers } from "formik";
 
-import styles from "./Auth.module.sass"
+import styles from "./Auth.module.sass";
 
-import {ButtonAuth, ButtonPartner, Input, LinkAuth} from '../UI/UI'
+import { ButtonAuth, ButtonPartner, Input, LinkAuth } from "../UI/UI";
 
-import {setModal, destroyModal} from '../../store/Modal'
-import {setBalance, setEmail} from '../../store/Profile'
+import { setModal, destroyModal } from "../../store/Modal";
+import { setBalance, setEmail } from "../../store/Profile";
 
-import {useAuthorizationMutation, useLazyGetProfileQuery} from '../../services/auth'
-import {AuthenticationRequest} from '../../models'
-import {Icon} from "../Icon/Icon";
-import {Registration} from "./Registration";
+import {
+  useAuthorizationMutation,
+  useLazyGetProfileQuery,
+} from "../../services/auth";
+import { AuthenticationRequest } from "../../models";
+import { Icon } from "../Icon/Icon";
+import { Registration } from "./Registration";
 
+export function Login() {
+  const [login, data] = useAuthorizationMutation();
+  const [getProfile] = useLazyGetProfileQuery();
 
-export const Login = () => {
-    const [login, data] = useAuthorizationMutation()
-    const [getProfile] = useLazyGetProfileQuery()
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch()
+  const closeModal = () => dispatch(destroyModal());
 
-    const closeModal = () => dispatch(destroyModal())
+  const turnOnRegistration = () => dispatch(setModal(<Registration />));
 
-    const turnOnRegistration = () => dispatch(setModal(<Registration/>))
+  function setData(
+    balanceFetch: number | undefined,
+    emailFetch: string | undefined
+  ) {
+    dispatch(setBalance(balanceFetch));
+    dispatch(setEmail(emailFetch));
+  }
 
-
-    function setData(balanceFetch: number | undefined, emailFetch: string | undefined) {
-        dispatch(setBalance(balanceFetch))
-        dispatch(setEmail(emailFetch))
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      getProfile(null)
+        .then((prom) => prom.data)
+        .then((body) => setData(body?.balance, body?.email));
     }
+  }, []);
 
-    useEffect(() => {
-        if (localStorage.getItem('token')) {
-            getProfile(null)
-                .then(prom => prom.data)
-                .then(body => setData(body?.balance, body?.email))
-        }
-    }, [])
+  const initialValues: AuthenticationRequest = {
+    login: "",
+    password: "",
+  };
 
-
-    const initialValues: AuthenticationRequest = {
-        login: '',
-        password: '',
+  const onSubmitFormik = (
+    values: AuthenticationRequest,
+    helpers: FormikHelpers<AuthenticationRequest>
+  ) => {
+    if (values.login !== "" && values.password !== "") {
+      login(values)
+        .then((res) => {
+          if ("data" in res) {
+            localStorage.setItem("token", res.data.token as string);
+            helpers.resetForm();
+            closeModal();
+          }
+        })
+        .then(() => {
+          getProfile(null).then((prom) =>
+            setData(prom?.data?.balance, prom?.data?.email)
+          );
+        });
     }
+  };
 
-    const onSubmitFormik = (values: AuthenticationRequest, helpers: FormikHelpers<AuthenticationRequest>) => {
-        if (values.login !== '' && values.password !== '') {
-            login(values)
-                .then(res => {
-                    if ('data' in res) {
-                        localStorage.setItem('token', res.data.token as string)
-                        helpers.resetForm()
-                        closeModal()
-                    }
-                })
-                .then(() => {
-                    getProfile(null)
-                        .then(prom => setData(prom?.data?.balance, prom?.data?.email))
-                })
-        }
-    }
+  const validationSchema = yup.object().shape({
+    login: yup.string().required("Поле обязательно для заполнения"),
+    password: yup
+      .string()
+      .min(5, "Минимальная длина пароля - 5 символов")
+      .required("Поле пароля обязательно для заполнения"),
+  });
 
-    const validationSchema = yup.object().shape({
-        login: yup.string().required('Поле обязательно для заполнения'),
-        password: yup.string()
-            .min(5, 'Минимальная длина пароля - 5 символов')
-            .required('Поле пароля обязательно для заполнения'),
-    });
+  return (
+    <Formik<AuthenticationRequest>
+      validationSchema={validationSchema}
+      initialValues={initialValues}
+      onSubmit={(values, helpers) => onSubmitFormik(values, helpers)}
+    >
+      {({ values, handleChange, handleBlur, handleSubmit, errors }) => (
+        <Form onSubmit={handleSubmit} className={styles.auth}>
+          <div className={styles.authHeader}>
+            <span>Вход</span>
+            <button type="button" onClick={() => closeModal()}>
+              <Icon name="cross" />
+            </button>
+          </div>
+          <div className={styles.authMain}>
+            <div className={styles.fields}>
+              <Input
+                placeholder="Номер телефона"
+                name="login"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.login}
+              />
 
-    return (
-        <Formik
-            <AuthenticationRequest>
-            validationSchema={validationSchema}
-            initialValues={initialValues}
-            onSubmit={(values, helpers) => onSubmitFormik(values, helpers)}>
-            {({
-                  values,
-                  handleChange,
-                  handleBlur,
-                  handleSubmit,
-                  errors
-              }) => (
-                <Form onSubmit={handleSubmit} className={styles.auth}>
-                    <div className={styles.authHeader}>
-                        <span>Вход</span>
-                        <button type='button' onClick={() => closeModal()}>
-                            <Icon name="cross"></Icon>
-                        </button>
-                    </div>
-                    <div className={styles.authMain}>
-                        <div className={styles.fields}>
-                            <Input
-                                placeholder={'Номер телефона'}
-                                name={'login'}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                value={values.login}
-                            />
+              {errors.login && (
+                <div className={styles.error}>{errors.login}</div>
+              )}
 
-                            {errors.login && (
-                                <div className={styles.error}>
-                                    {errors.login}
-                                </div>
-                            )}
+              <Input
+                placeholder="Пароль"
+                name="password"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.password}
+              />
 
+              {errors.password && (
+                <div className={styles.error}>{errors.password}</div>
+              )}
 
-                            <Input
-                                placeholder={'Пароль'}
-                                name={'password'}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                value={values.password}
-                            />
-
-                            {errors.password && (
-                                <div className={styles.error}>
-                                    {errors.password}
-                                </div>
-                            )}
-
-                            {data.isError &&
-                                <span className={styles.errorMessage}>Неверное имя пользователя или пароль</span>}
-                        </div>
-                        <div className={styles.login}>
-                            <ButtonAuth type='submit'>Войти</ButtonAuth>
-                            <div className={styles.smsLogin}>
-                                <LinkAuth onClick={() => {}}>{'Войти с помощью смс'}</LinkAuth>
-                                <LinkAuth onClick={turnOnRegistration}>{'Регистрация'}</LinkAuth>
-                            </div>
-                        </div>
-                        <ButtonPartner type={"button"}>Вход для партнёров</ButtonPartner>
-                    </div>
-                </Form>
-            )}
-        </Formik>
-    )
+              {data.isError && (
+                <span className={styles.errorMessage}>
+                  Неверное имя пользователя или пароль
+                </span>
+              )}
+            </div>
+            <div className={styles.login}>
+              <ButtonAuth type="submit">Войти</ButtonAuth>
+              <div className={styles.smsLogin}>
+                <LinkAuth onClick={() => {}}>Войти с помощью смс</LinkAuth>
+                <LinkAuth onClick={turnOnRegistration}>Регистрация</LinkAuth>
+              </div>
+            </div>
+            <ButtonPartner type="button">Вход для партнёров</ButtonPartner>
+          </div>
+        </Form>
+      )}
+    </Formik>
+  );
 }
-

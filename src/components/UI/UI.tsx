@@ -1,83 +1,25 @@
-import React, {ButtonHTMLAttributes, InputHTMLAttributes, ReactNode} from 'react'
-import styles from './UI.module.sass'
-import cn from 'classnames/bind'
+import React, {
+  AnchorHTMLAttributes,
+  ButtonHTMLAttributes,
+  InputHTMLAttributes,
+} from "react";
+import cn from "classnames/bind";
+import styles from "./UI.module.sass";
 
-const cx = cn.bind(styles)
+const cx = cn.bind(styles);
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-    children: ReactNode
+export function ButtonAuth(props: ButtonHTMLAttributes<HTMLButtonElement>) {
+  return <button {...props} className={cx(styles.button, styles.btnGreen)} />;
+}
+export function ButtonPartner(props: ButtonHTMLAttributes<HTMLButtonElement>) {
+  return <button {...props} className={cx(styles.button, styles.btnGray)} />;
 }
 
-export const ButtonAuth = ({children, onClick, type, disabled}: ButtonProps) => {
-    return (
-        <button disabled={disabled} type={type} onClick={onClick} className={cx(styles.button, styles.buttonGreen)}>
-            {children}
-        </button>
-    )
+export function LinkAuth(props: AnchorHTMLAttributes<HTMLAnchorElement>) {
+  // eslint-disable-next-line jsx-a11y/anchor-has-content
+  return <a className={styles.link} {...props} />;
 }
 
-export const ButtonPartner = ({children, onClick, type, disabled}: ButtonProps) => {
-    return (
-        <button disabled={disabled} type={type} onClick={onClick} className={cx(styles.button, styles.buttonGray)}>
-            {children}
-        </button>
-    )
+export function Input(props: InputHTMLAttributes<HTMLInputElement>) {
+  return <input className={styles.input} {...props} />;
 }
-
-interface LinkProps {
-    children: ReactNode;
-    onClick?: () => void;
-}
-
-
-export const LinkAuth = ({children, onClick}: LinkProps) => {
-    return (
-        <a className={styles.link} onClick={onClick}>
-            {children}
-        </a>
-    )
-}
-
-export const Input = ({
-    placeholder,
-    name,
-    type,
-    onChange,
-    onBlur,
-    value,
-    onClick
-}: InputHTMLAttributes<HTMLInputElement>) => {
-    return (
-        <input
-            name={name}
-            type={type}
-            className={styles.input}
-            placeholder={placeholder}
-
-            onChange={onChange}
-            onBlur={onBlur}
-            value={value}
-            onClick={onClick}
-        />
-    )
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

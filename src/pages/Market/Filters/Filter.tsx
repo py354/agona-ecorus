@@ -1,22 +1,21 @@
-import React from "react"
-import styles from "./Filters.module.sass"
-import {Checkbox} from "./Checkbox"
+import React from "react";
+import styles from "./Filters.module.sass";
+import { Checkbox } from "./Checkbox";
 
-interface CheckboxArray {
-    category: string
-    CheckboxArray: Array<string>
+interface CheckboxArrayProps {
+  category: string;
+  CheckboxNames: Array<string>;
 }
 
-export const CheckboxArray = ({category, CheckboxArray}: CheckboxArray) => {
-    return (
-        <div className={styles.box}>
-            <p className={styles.text}>{category}</p>
-            <div className={styles.choose}>
-                {
-                    CheckboxArray.map((checkbox: string, index: number) =>
-                        <Checkbox key={index} name={checkbox}/>)
-                }
-            </div>
-        </div>
-    )
+export function CheckboxArray({ category, CheckboxNames }: CheckboxArrayProps) {
+  return (
+    <div className={styles.box}>
+      <p className={styles.text}>{category}</p>
+      <div className={styles.choose}>
+        {CheckboxNames.map((checkbox: string) => (
+          <Checkbox key={checkbox} name={checkbox} />
+        ))}
+      </div>
+    </div>
+  );
 }
