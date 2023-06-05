@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import styles from "./styles/App.module.sass";
 import { NotFound } from "./pages/NotFound/NotFound";
 import { Header } from "./components/Header/Header";
@@ -8,7 +9,6 @@ import { About } from "./pages/About/About";
 import { MainPage } from "./pages/MainPage/MainPage";
 import { Market } from "./pages/Market/Market";
 import { setBalance, setEmail } from "./store/Profile";
-import { useDispatch } from "react-redux";
 import { useLazyGetProfileQuery } from "./services/auth";
 
 function App() {

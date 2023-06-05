@@ -10,10 +10,8 @@ import styles from "./Auth.module.sass";
 
 import { ButtonAuth, Input } from "../UI/UI";
 import { Icon } from "../Icon/Icon";
-interface Props {
-    setToken: (token: string) => void;
-}
-export function Registration({ setToken }: Props) {
+
+export function Registration() {
     const [register] = useRegistrationMutation();
     const [status, setStatus] = useState({
         success: false,

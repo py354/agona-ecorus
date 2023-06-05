@@ -7,12 +7,12 @@ import App from "./App";
 import { rootStore } from "./store/store";
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+    document.getElementById("root") as HTMLElement,
 );
 root.render(
-  <Provider store={rootStore}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Provider>
+    <Provider store={rootStore}>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    </Provider>,
 );

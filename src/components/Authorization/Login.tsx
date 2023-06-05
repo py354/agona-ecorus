@@ -25,8 +25,7 @@ export function Login({ setToken }: Props) {
 
     const closeModal = () => dispatch(destroyModal());
 
-    const turnOnRegistration = () =>
-        dispatch(setModal(<Registration setToken={setToken} />));
+    const turnOnRegistration = () => dispatch(setModal(<Registration />));
 
     const initialValues: AuthenticationRequest = {
         login: "",
